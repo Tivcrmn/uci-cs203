@@ -32,3 +32,7 @@ export const generateToken = (salt = 32) => {
 export const md5 = string => {
   return crypto.createHash("md5").update(string).digest("hex");
 };
+
+export const sha256 = (string, key) => {
+  return crypto.createHmac("sha256", key).update(string).digest("base64");
+};
