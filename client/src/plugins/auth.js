@@ -3,26 +3,33 @@ import { Route, Redirect } from "react-router-dom";
 import axios from "axios";
 
 class AuthRoute extends Component {
-  state = {
-    token: []
+  constructor(props) {
+    super(props);
+    this.state = {
+      token: [],
+      loading: true
+    };
   }
 
   componentDidMount() {
     axios.get("https://jsonplaceholder.typicode.com/users")
       .then(res => {
         const token = res.data;
-        this.setState({ token });
+        this.setState({ token, loading: false });
       });
   }
 
   render() {
     const { component: Component, ...rest } = this.props;
-    let token = localStorage.getItem("token");
+    if (this.state.loading) {
+      console.log("loading...");
+      return <div>loading...</div>;
+    }
     return (
       <Route
         {...rest}
         render={props =>
-          token ? (
+          this.state.token.length === 10 ? (
             <Component {...props} />
           ) : (
             <Redirect

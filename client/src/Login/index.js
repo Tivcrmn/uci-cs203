@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import history from "../plugins/history";
+import axios from "axios";
 import "./index.css";
 
 class Login extends Component{
@@ -7,19 +8,11 @@ class Login extends Component{
     super(props);
     this.state = {
       userName: "",
-      password: ""
+      password: "",
     };
     this.handleUserNameChange = this.handleUserNameChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.login = this.login.bind(this);
-  }
-  
-  componentWillMount() {
-    let token = localStorage.getItem("token");
-    if (token) {
-      console.log("the token is in browser");
-      history.push("/");
-    }
   }
 
   handleUserNameChange(e) {
@@ -36,8 +29,17 @@ class Login extends Component{
 
   login() {
     let {userName, password} = this.state;
-    localStorage.setItem("token", `${userName} ${password}`);
-    history.push("/");
+    if (this.props.authType === "JWT") {
+      axios.post("http://127.0.0.1:5000/api-self/v1/jwt_login", {userName, password})
+        .then(res => {
+          if (res.data.success) {
+            localStorage.setItem("token", res.data.data.token);
+            history.push(window.location.pathname, {login: true});
+          } else {
+            alert(res.data.error);
+          }
+        });
+    }
   }
 
   render() {
