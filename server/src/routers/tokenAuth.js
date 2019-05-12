@@ -39,11 +39,6 @@ export const register = conext(async (req, res, next) => {
   return res.send(apiResult({ data: newUser }));
 });
 
-export const list = conext(async (req, res) => {
-  let users = await User.getByQuery({});
-  res.send(apiResult({ data: users }));
-});
-
 export default {
   login,
   register
