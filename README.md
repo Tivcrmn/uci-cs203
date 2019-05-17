@@ -15,7 +15,6 @@ CS203 Web Authentication Project
 ```bash
 cd server/
 npm i
-npm run postinstall
 npm run dev
 ```
 
