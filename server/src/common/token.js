@@ -33,7 +33,7 @@ export const setToken = (token, obj) => {
   return new Promise((resolve, reject) => {
     db.setex(
       `${config.tokenName}:${token}`,
-      config.tokenExpireSeconds,
+      config.expireSeconds,
       JSON.stringify(obj),
       (err, res) => {
         err ? reject(res) : resolve(res === "OK");

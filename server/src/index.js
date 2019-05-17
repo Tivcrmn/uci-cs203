@@ -17,11 +17,11 @@ app.use(bodyParser.json({ limit: "10mb" }));
 
 app.use(bodyParser.urlencoded({ extended: true, limit: "10mb" }));
 
-app.use(cookieParser("my_secret"));
+app.use(cookieParser(config.sessionSecret));
 
 app.use(session({
-  name: "session-name",
-  secret: "my_secret",
+  name: config.sessionName,
+  secret: config.sessionSecret,
   resave: true,
   saveUninitialized: true,
   store: new RS({ port: config.redis.port,

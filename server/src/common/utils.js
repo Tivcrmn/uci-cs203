@@ -1,5 +1,6 @@
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
+import config from "config";
 
 export const validateId = str => {
   return (/^[a-zA-Z0-9\\u4E00-\u9FA5\-._]+$/i).test(str);
@@ -21,7 +22,7 @@ export const bcompare = (str, hash, cb) => {
   });
 };
 
-export const generateToken = (salt = 32) => {
+export const generateToken = (salt = config.tokenSalt) => {
   return new Promise((resolve, reject) => {
     crypto.randomBytes(salt, function (err, buf) {
       err ? reject(err) : resolve(buf.toString("hex"));
