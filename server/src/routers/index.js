@@ -2,9 +2,7 @@ import { Router } from "express";
 import apiResult from "@/common/result";
 import tokenAuth from "./tokenAuth";
 import jwt from "./jwt";
-import ck from "./cookie";
-import sr from "./sessiononredis";
-import cs from "./cookieandsession";
+import cs from "./cs";
 
 const router = Router();
 
@@ -26,8 +24,7 @@ router.post("/token_login", tokenAuth.login);
 router.post("/token_register", tokenAuth.register);
 router.post("/jwt_login", jwt.login);
 router.post("/jwt_auth", jwt.auth);
-router.post("/ck_login", ck.cookielogin);
-router.post("/sr_login", sr.sessionlogin);
-router.post("/cs_login", cs.cookiesessionlogin);
+router.post("/cs_login", cs.login);
+router.post("/cs_auth", cs.auth);
 
 export default router;

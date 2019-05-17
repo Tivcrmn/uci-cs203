@@ -3,29 +3,35 @@ import bodyParser from "body-parser";
 import config from "config";
 import shelljs from "shelljs";
 import cookieParser from "cookie-parser";
-import "colors";
 import errorHandle from "@/middlewares/errorHandle";
 import routers from "@/routers";
 import session from "express-session";
-var RedisStore = require("connect-redis")(session);
+import RedisStore from "connect-redis";
+import "colors";
+
+const RS = RedisStore(session);
 
 const app = express();
 
 app.use(bodyParser.json({ limit: "10mb" }));
+
 app.use(bodyParser.urlencoded({ extended: true, limit: "10mb" }));
+
 app.use(cookieParser("my_secret"));
+
 app.use(session({
   name: "session-name",
-  secret: "my_session_secret",
+  secret: "my_secret",
   resave: true,
-  saveUninitialized: false,
-  store: new RedisStore({ port: config.redis.port,
+  saveUninitialized: true,
+  store: new RS({ port: config.redis.port,
     host: config.redis.host,
     db: config.redis.db
   })
 }));
 
 app.enable("trust proxy");
+
 app.disable("x-powered-by");
 
 app.use((req, res, next) => {
