@@ -19,7 +19,7 @@ export const login = conext(async (req, res, next) => {
 });
 
 export const auth = conext(async (req, res, next) => {
-  if (!req.session.user) return res.send(apiResult({ data: "not valid" }));
+  if (!req.session.user) return res.send(apiResult({ error: "token not valid" }));
   return res.send(apiResult({ data: "token valid" }));
 });
 

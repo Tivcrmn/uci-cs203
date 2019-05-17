@@ -1,9 +1,9 @@
 import apiResult from "@/common/result";
-import { bhash, bcompare, generateToken } from "@/common/utils";
-import { merge, assign } from "lodash";
+import { bcompare, generateToken } from "@/common/utils";
+import { assign } from "lodash";
 import * as User from "@/middlewares/method";
 import conext from "@/middlewares/conext";
-import { setToken } from "@/common/token";
+import { setToken, getToken } from "@/common/token";
 
 export const login = conext(async (req, res, next) => {
   let { userName, password } = req.body;
@@ -28,18 +28,17 @@ export const login = conext(async (req, res, next) => {
   }));
 });
 
-export const register = conext(async (req, res, next) => {
-  let { userName, password } = req.body;
-  let user = await User.getByUserName(userName);
-  if (user) {
-    return res.send(apiResult({ error: "USER_EXISTS" }));
-  }
-  let passhash = await bhash(password);
-  let newUser = await User.save(merge(req.body, { password: passhash }));
-  return res.send(apiResult({ data: newUser }));
+export const auth = conext(async (req, res, next) => {
+  const token = req.body.token;
+  let r = await getToken(token);
+  return res.send(apiResult(r ? { data: {
+    data: "token valid"
+  } } : {
+    error: "token invalid"
+  }));
 });
 
 export default {
   login,
-  register
+  auth
 };
