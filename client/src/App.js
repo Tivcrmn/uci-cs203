@@ -1,8 +1,8 @@
 import React from "react";
-import { Router, Switch, Route, Link } from "react-router-dom";
+import { Router, Switch, Route, NavLink } from "react-router-dom";
 import "./App.css";
-import history from "./plugins/history";
-import routes from "./plugins/routes";
+import history from "plugins/history";
+import routes from "plugins/routes";
 import logo from "./assets/logo.svg";
 
 const App = () => (
@@ -13,9 +13,9 @@ const App = () => (
         <ul>
           {routes.filter(v => v.show).map((route, index) => (
             <li key={index}>
-              <Link className="link" to={route.path}>
+              <NavLink className="link"  activeClassName="current" to={route.path}>
                 {route.name}
-              </Link>
+              </NavLink>
             </li>
           ))}
         </ul>

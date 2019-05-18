@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import history from "../plugins/history";
-import axios from "axios";
+import history from "plugins/history";
+import API from "plugins/axios";
 import "./index.css";
 
 class Login extends Component{
@@ -10,27 +10,38 @@ class Login extends Component{
       userName: "",
       password: "",
     };
-    this.handleUserNameChange = this.handleUserNameChange.bind(this);
-    this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.handlInputChange = this.handlInputChange.bind(this);
     this.login = this.login.bind(this);
   }
 
-  handleUserNameChange(e) {
+  handlInputChange(e) {
     this.setState({
-      userName: e.target.value
-    });
-  }
-
-  handlePasswordChange(e) {
-    this.setState({
-      password: e.target.value
+      [e.target.name]: e.target.value
     });
   }
 
   login() {
     let {userName, password} = this.state;
     if (this.props.authType === "JWT") {
-      axios.post("http://127.0.0.1:5000/api-self/v1/jwt_login", {userName, password})
+      API.post("api-self/v1/jwt_login", {userName, password})
+        .then(res => {
+          if (res.data.success) {
+            localStorage.setItem("jwtToken", res.data.data.token);
+            history.push(window.location.pathname, {login: true});
+          } else {
+            alert(res.data.error);
+          }
+        });
+    } else if (this.props.authType === "CS") {
+      API.post("api-self/v1/cs_login",
+        {userName, password},
+        {withCredentials: true})
+        .then(res => {
+          // TODO
+        });
+    } else if (this.props.authType === "Token") {
+      API.post("api-self/v1/token_login",
+        {userName, password})
         .then(res => {
           if (res.data.success) {
             localStorage.setItem("token", res.data.data.token);
@@ -46,8 +57,8 @@ class Login extends Component{
     return (
       <div className="login-page">
         <p>Web Authentication Demo</p>
-        <input type="text" value={this.state.userName} onChange={this.handleUserNameChange}></input>
-        <input type="password" value={this.state.password} onChange={this.handlePasswordChange}></input>
+        <input type="text" value={this.state.userName} name="userName" onChange={this.handlInputChange}></input>
+        <input type="password" value={this.state.password} name="password" onChange={this.handlInputChange}></input>
         <button type="button" onClick={this.login}>Login</button>
       </div>
     );

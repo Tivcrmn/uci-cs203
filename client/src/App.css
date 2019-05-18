@@ -33,13 +33,7 @@
   font: 13px "Nunito", sans-serif;
   list-style: none;
   width: 100px;
-  height: 30px;
   background-color: #99ccff;
-  border-radius: 5%;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
 }
 
 #navigation li:hover {
@@ -53,6 +47,11 @@
 #navigation .link {
   text-decoration: none;
   color: #fff;
+  height: 30px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .main {
@@ -66,4 +65,8 @@
 
 .logout:hover {
   cursor: pointer;
+}
+
+.current {
+  background-color: #2163ce;
 }

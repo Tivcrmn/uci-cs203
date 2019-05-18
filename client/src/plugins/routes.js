@@ -2,6 +2,7 @@ import React from "react";
 import JWT from "../JWT";
 import CS from "../CS";
 import F0F from "../F0F";
+import Token from "../Token";
 
 const routes = [
   {
@@ -20,6 +21,12 @@ const routes = [
     path: "/cs",
     main: CS,
     name: "Cookie/Session",
+    show: true
+  },
+  {
+    path: "/token",
+    main: Token,
+    name: "Token",
     show: true
   },
   {

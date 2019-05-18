@@ -12,9 +12,9 @@ class JWT extends Component{
   }
 
   componentWillMount() {
-    let jwtToken = localStorage.getItem("jwtToken");
-    if (jwtToken) {
-      API.post("api-self/v1/jwt_auth", { jwtToken })
+    let token = localStorage.getItem("token");
+    if (token) {
+      API.post("api-self/v1/token_auth", { token })
         .then(res => {
           const success = res.data.success;
           this.setState({ success, loading: false });
@@ -26,11 +26,11 @@ class JWT extends Component{
 
   render() {
     if (this.state.loading) {
-      return <h1>JWT loading....</h1>;
+      return <h1>Token loading....</h1>;
     }
     return this.state.success ||
           (this.props.location.state &&
-            this.props.location.state.login) ? <h1>{`${window.location.pathname}`} sucess....</h1> : <Login authType={"JWT"} />;
+            this.props.location.state.login) ? <h1>{`${window.location.pathname}`} sucess....</h1> : <Login authType={"Token"} />;
   }
 }
 

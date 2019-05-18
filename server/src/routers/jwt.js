@@ -21,8 +21,8 @@ export const login = conext(async (req, res, next) => {
 });
 
 export const auth = conext(async (req, res, next) => {
-  let { token } = req.body;
-  const { userName, password } = jwt.verify(token, config.jwtSecret);
+  let { jwtToken } = req.body;
+  const { userName, password } = jwt.verify(jwtToken, config.jwtSecret);
   let user = await User.getByUserName(userName);
   if (!user) {
     return res.send(apiResult({ error: "NO_SUCH_USER" }));
