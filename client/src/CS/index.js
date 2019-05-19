@@ -12,16 +12,16 @@ class CS extends Component{
   }
 
   componentWillMount() {
-    let token = localStorage.getItem("token");
-    if (token) {
-      API.post("api-self/v1/cs_auth", { token })
-        .then(res => {
-          const success = res.data.success;
-          this.setState({ success, loading: false });
-        });
-    } else {
-      this.setState({ loading: false });
-    }
+    API.post("api-self/v1/cs_auth")
+      .then(res => {
+        const response = res.data;
+        if (response.success) {
+          this.setState({ success: true, loading: false });
+        } else {
+          alert("cookie invalid");
+          this.setState({ loading: false });
+        }
+      });
   }
 
   render() {

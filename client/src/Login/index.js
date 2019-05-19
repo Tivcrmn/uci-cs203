@@ -27,7 +27,9 @@ class Login extends Component{
       .then(res => {
         const response = res.data;
         if (response.success) {
-          localStorage.setItem(type, res.headers[type]);
+          if (type !== "cs") {
+            localStorage.setItem(type, res.headers[type]);
+          }
           history.push(window.location.pathname, {login: true});
         } else {
           alert(res.data.error);
