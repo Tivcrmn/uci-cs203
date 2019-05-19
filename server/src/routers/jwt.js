@@ -23,9 +23,11 @@ export const login = conext(async (req, res, next) => {
 
 export const auth = conext(async (req, res, next) => {
   const jwtToken = req.body.token;
-  const { exp } = jwt.verify(jwtToken, config.jwtSecret);
-  if (exp < Math.floor(Date.now() / 1000)) {
-    return res.send(apiResult({ data: "token expired" }));
+  try {
+    const decoded = jwt.verify(jwtToken, config.jwtSecret);
+    console.log(decoded);
+  } catch (err) {
+    return res.send(apiResult({ error: err }));
   }
   return res.send(apiResult({ data: "token valid" }));
 });
