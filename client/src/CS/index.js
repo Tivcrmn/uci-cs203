@@ -7,7 +7,7 @@ class CS extends Component{
     super(props);
     this.state = {
       success: false,
-      loading: true
+      loading: true,
     };
   }
 

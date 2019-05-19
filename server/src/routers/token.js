@@ -19,26 +19,22 @@ export const login = conext(async (req, res, next) => {
   let _user = assign({}, user._doc);
   delete _user.password;
   delete _user.token;
-  let r = await setToken(token, _user);
-  return res.send(apiResult(r ? { data: {
-    user: _user,
-    token: token
-  } } : {
-    error: "CREATE_TOKEN_FAIL"
-  }));
+  await setToken(token, _user);
+  res.setHeader("Token", token);
+  return res.send(apiResult({ data: "login success" }));
 });
 
 export const auth = conext(async (req, res, next) => {
   const token = req.body.token;
   let r = await getToken(token);
   return res.send(apiResult(r ? { data: {
-    data: "token valid"
+    data: "token valid",
   } } : {
-    error: "token invalid"
+    error: "token invalid",
   }));
 });
 
 export default {
   login,
-  auth
+  auth,
 };

@@ -11,11 +11,13 @@
     "redux": "^4.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "npm run lint && npm run kp && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint:fix": "eslint --ext .js src --fix"
+    "lint:fix": "eslint --ext .js src --fix",
+    "lint": "eslint --ext .js src",
+    "kp": "lsof -n -iTCP:3000 -sTCP:LISTEN -n -l -P | grep 'LISTEN' | awk '{print $2}' | xargs kill -9"
   },
   "eslintConfig": {
     "extends": "react-app"

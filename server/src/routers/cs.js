@@ -2,7 +2,6 @@ import { bcompare } from "@/common/utils";
 import conext from "@/middlewares/conext";
 import apiResult from "@/common/result";
 import * as User from "@/middlewares/method";
-// import { get } from "@/common/token";
 
 export const login = conext(async (req, res, next) => {
   let { userName, password } = req.body;
@@ -25,5 +24,5 @@ export const auth = conext(async (req, res, next) => {
 
 export default {
   login,
-  auth
+  auth,
 };

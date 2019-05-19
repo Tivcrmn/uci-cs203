@@ -7,17 +7,23 @@ class JWT extends Component{
     super(props);
     this.state = {
       success: false,
-      loading: true
+      loading: true,
     };
   }
 
   componentWillMount() {
-    let jwtToken = localStorage.getItem("jwtToken");
-    if (jwtToken) {
-      API.post("api-self/v1/jwt_auth", { jwtToken })
+    let token = localStorage.getItem("jwt");
+    if (token) {
+      API.post("api-self/v1/jwt_auth", { token })
         .then(res => {
-          const success = res.data.success;
-          this.setState({ success, loading: false });
+          const response = res.data;
+          if (response.success) {
+            this.setState({ success: true, loading: false });
+          } else {
+            alert("jwtToken invalid");
+            localStorage.removeItem("jwt");
+            this.setState({ loading: false });
+          }
         });
     } else {
       this.setState({ loading: false });

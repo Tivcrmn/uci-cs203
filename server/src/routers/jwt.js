@@ -15,26 +15,22 @@ export const login = conext(async (req, res, next) => {
   if (!compare) {
     return res.send(apiResult({ error: "WRONG_PASSWORD" }));
   }
-  const token = jwt.sign(req.body, config.jwtSecret);
-  // res.setHeader("JWT", jwt);
-  return res.send(apiResult({ data: { token } }));
+  const expireTime = Math.floor(Date.now() / 1000) + config.expireSeconds;
+  const token = jwt.sign({ exp: expireTime, data: req.body }, config.jwtSecret);
+  res.setHeader("JWT", token);
+  return res.send(apiResult({ data: "login success" }));
 });
 
 export const auth = conext(async (req, res, next) => {
-  let { jwtToken } = req.body;
-  const { userName, password } = jwt.verify(jwtToken, config.jwtSecret);
-  let user = await User.getByUserName(userName);
-  if (!user) {
-    return res.send(apiResult({ error: "NO_SUCH_USER" }));
-  }
-  let compare = await bcompare(password, user.password);
-  if (!compare) {
-    return res.send(apiResult({ error: "WRONG_PASSWORD" }));
+  const jwtToken = req.body.token;
+  const { exp } = jwt.verify(jwtToken, config.jwtSecret);
+  if (exp < Math.floor(Date.now() / 1000)) {
+    return res.send(apiResult({ data: "token expired" }));
   }
   return res.send(apiResult({ data: "token valid" }));
 });
 
 export default {
   login,
-  auth
+  auth,
 };

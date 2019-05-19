@@ -7,7 +7,7 @@ class JWT extends Component{
     super(props);
     this.state = {
       success: false,
-      loading: true
+      loading: true,
     };
   }
 
@@ -17,7 +17,13 @@ class JWT extends Component{
       API.post("api-self/v1/token_auth", { token })
         .then(res => {
           const success = res.data.success;
-          this.setState({ success, loading: false });
+          if (success) {
+            this.setState({ success, loading: false });
+          } else {
+            alert("token invalid");
+            localStorage.removeItem("token");
+            this.setState({ loading: false });
+          }
         });
     } else {
       this.setState({ loading: false });

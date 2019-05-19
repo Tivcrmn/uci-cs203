@@ -24,7 +24,7 @@ app.use(session({
   secret: config.sessionSecret,
   resave: true,
   saveUninitialized: true,
-  store: new RS({ ...config.redis })
+  store: new RS({ ...config.redis }),
 }));
 
 app.enable("trust proxy");
@@ -32,10 +32,11 @@ app.enable("trust proxy");
 app.disable("x-powered-by");
 
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
   res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  res.setHeader("Access-Control-Expose-Headers", "JWT, Token");
   next();
 });
 

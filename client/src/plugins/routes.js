@@ -9,31 +9,31 @@ const routes = [
     path: "/",
     exact: true,
     main: () => <h1>This is the dashboard</h1>,
-    show: false
+    show: false,
   },
   {
     path: "/jwt",
     main: JWT,
     name: "JSON Web Token",
-    show: true
+    show: true,
   },
   {
     path: "/cs",
     main: CS,
     name: "Cookie/Session",
-    show: true
+    show: true,
   },
   {
     path: "/token",
     main: Token,
     name: "Token",
-    show: true
+    show: true,
   },
   {
     path: "*",
     main: F0F,
-    show: false
-  }
+    show: false,
+  },
 ];
 
 export default routes;

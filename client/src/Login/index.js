@@ -16,41 +16,23 @@ class Login extends Component{
 
   handlInputChange(e) {
     this.setState({
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   }
 
   login() {
     let {userName, password} = this.state;
-    if (this.props.authType === "JWT") {
-      API.post("api-self/v1/jwt_login", {userName, password})
-        .then(res => {
-          if (res.data.success) {
-            localStorage.setItem("jwtToken", res.data.data.token);
-            history.push(window.location.pathname, {login: true});
-          } else {
-            alert(res.data.error);
-          }
-        });
-    } else if (this.props.authType === "CS") {
-      API.post("api-self/v1/cs_login",
-        {userName, password},
-        {withCredentials: true})
-        .then(res => {
-          // TODO
-        });
-    } else if (this.props.authType === "Token") {
-      API.post("api-self/v1/token_login",
-        {userName, password})
-        .then(res => {
-          if (res.data.success) {
-            localStorage.setItem("token", res.data.data.token);
-            history.push(window.location.pathname, {login: true});
-          } else {
-            alert(res.data.error);
-          }
-        });
-    }
+    const type = this.props.authType.toLowerCase();
+    API.post(`api-self/v1/${type}_login`, {userName, password})
+      .then(res => {
+        const response = res.data;
+        if (response.success) {
+          localStorage.setItem(type, res.headers[type]);
+          history.push(window.location.pathname, {login: true});
+        } else {
+          alert(res.data.error);
+        }
+      });
   }
 
   render() {

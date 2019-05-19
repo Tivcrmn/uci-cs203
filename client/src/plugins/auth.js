@@ -7,7 +7,7 @@ class AuthRoute extends Component {
     super(props);
     this.state = {
       token: [],
-      loading: true
+      loading: true,
     };
   }
 
@@ -22,7 +22,6 @@ class AuthRoute extends Component {
   render() {
     const { component: Component, ...rest } = this.props;
     if (this.state.loading) {
-      console.log("loading...");
       return <div>loading...</div>;
     }
     return (
@@ -35,7 +34,7 @@ class AuthRoute extends Component {
             <Redirect
               to={{
                 pathname: "/login",
-                state: { from: props.location }
+                state: { from: props.location },
               }}
             />
           )

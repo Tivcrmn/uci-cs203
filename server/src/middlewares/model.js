@@ -7,7 +7,7 @@ mongoose.Promise = bluebird;
 
 const options = {
   useMongoClient: true,
-  poolSize: 20
+  poolSize: 20,
 };
 
 const Model = schema => {
@@ -25,7 +25,7 @@ const UserSchema = new Schema({
   password: { type: String },
   isAdmin: { type: Boolean, default: false },
   createTime: { type: Date, default: Date.now },
-  updateTime: { type: Date, default: Date.now }
+  updateTime: { type: Date, default: Date.now },
 });
 
 mongoose.connect(config.db, options)
