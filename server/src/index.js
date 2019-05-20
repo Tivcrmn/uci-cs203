@@ -23,8 +23,8 @@ app.use(session({
   name: config.sessionName,
   secret: config.sessionSecret,
   resave: true,
-  maxAge: config.expireSeconds * 1000,
   saveUninitialized: false,
+  cookie: { maxAge: config.expireSeconds * 1000 },
   store: new RS({ ...config.redis }),
 }));
 
