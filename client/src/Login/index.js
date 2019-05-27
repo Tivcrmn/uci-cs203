@@ -22,7 +22,7 @@ class Login extends Component{
 
   login() {
     let {userName, password} = this.state;
-    const type = this.props.authType.toLowerCase();
+    const type = this.props.location.state.authType.toLowerCase();
     API.post(`api-self/v1/${type}_login`, {userName, password})
       .then(res => {
         const response = res.data;
@@ -30,7 +30,7 @@ class Login extends Component{
           if (type !== "cs") {
             localStorage.setItem(type, res.headers[type]);
           }
-          history.push(window.location.pathname, {login: true});
+          history.push(`/${type}`);
         } else {
           alert(res.data.error);
         }

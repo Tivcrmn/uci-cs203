@@ -1,8 +1,9 @@
 import React from "react";
 import JWT from "../JWT";
 import CS from "../CS";
-import F0F from "../F0F";
 import Token from "../Token";
+import F0F from "../F0F";
+import Login from "../Login";
 
 const routes = [
   {
@@ -28,6 +29,11 @@ const routes = [
     main: Token,
     name: "Token",
     show: true,
+  },
+  {
+    path: "/login",
+    main: Login,
+    show: false,
   },
   {
     path: "*",

@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import API from "plugins/axios";
-import Login from "../Login";
+import history from "plugins/history";
 
-class JWT extends Component{
+class Token extends Component{
   constructor(props) {
     super(props);
     this.state = {
-      success: false,
       loading: true,
     };
   }
@@ -18,14 +17,16 @@ class JWT extends Component{
         .then(res => {
           const success = res.data.success;
           if (success) {
-            this.setState({ success, loading: false });
+            this.setState({loading: false });
           } else {
             alert("token invalid");
             localStorage.removeItem("token");
             this.setState({ loading: false });
+            history.push("/login", {authType: "Token"});
           }
         });
     } else {
+      history.push("/login", {authType: "Token"});
       this.setState({ loading: false });
     }
   }
@@ -34,10 +35,8 @@ class JWT extends Component{
     if (this.state.loading) {
       return <h1>Token loading....</h1>;
     }
-    return this.state.success ||
-          (this.props.location.state &&
-            this.props.location.state.login) ? <h1>{`${window.location.pathname}`} sucess....</h1> : <Login authType={"Token"} />;
+    return <h1>{`${window.location.pathname}`} success....</h1>;
   }
 }
 
-export default JWT;
+export default Token;
