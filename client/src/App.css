@@ -70,3 +70,12 @@
 .current {
   background-color: #2163ce;
 }
+
+.google-btn {
+  color: #fff;
+  text-decoration: none;
+  font-size: 18px;
+  padding: 10px;
+  background: #ff5353;
+  margin: 50px;
+}

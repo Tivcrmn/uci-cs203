@@ -17,7 +17,6 @@ class CS extends Component{
         if (response.success) {
           this.setState({ loading: false });
         } else {
-          alert("cookie invalid");
           this.setState({ loading: false });
           history.push("/login", {authType: "CS"});
         }

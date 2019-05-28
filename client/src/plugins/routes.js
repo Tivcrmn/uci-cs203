@@ -2,6 +2,7 @@ import React from "react";
 import JWT from "../JWT";
 import CS from "../CS";
 import Token from "../Token";
+import OAuth from "../OAuth";
 import F0F from "../F0F";
 import Login from "../Login";
 
@@ -29,6 +30,12 @@ const routes = [
     main: Token,
     name: "Token",
     show: true,
+  },
+  {
+    path: "/oauth",
+    main: OAuth,
+    show: true,
+    name: "OAuth",
   },
   {
     path: "/login",

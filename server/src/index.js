@@ -7,6 +7,9 @@ import routers from "@/routers";
 import session from "express-session";
 import RedisStore from "connect-redis";
 import cors from "cors";
+import passport from "passport";
+import socketio from "socket.io";
+import "@/middlewares/passport-setup";
 import "colors";
 
 const RS = RedisStore(session);
@@ -27,6 +30,8 @@ app.use(session({
   cookie: { maxAge: config.expireSeconds * 1000 },
   store: new RS({ ...config.redis }),
 }));
+
+app.use(passport.initialize());
 
 app.use(
   cors({
@@ -53,7 +58,10 @@ app.use(errorHandle);
 
 const port = process.env.PORT || config.port;
 
-app.listen(port, e => {
+let server = app.listen(port, e => {
   console.log("\nAPI server listening at ".green);
   console.log(("=> http://127.0.0.1:" + port).cyan + "\n");
 });
+
+const io = socketio(server);
+app.set("io", io);
