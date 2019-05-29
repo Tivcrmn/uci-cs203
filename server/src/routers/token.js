@@ -27,9 +27,9 @@ export const login = conext(async (req, res, next) => {
 export const auth = conext(async (req, res, next) => {
   const token = req.body.token;
   let r = await getToken(token);
-  return res.send(apiResult(r ? { data: {
+  return res.send(apiResult(r ? {
     data: "token valid",
-  } } : {
+  } : {
     error: "token invalid",
   }));
 });
