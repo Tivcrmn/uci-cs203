@@ -8,7 +8,7 @@ import Login from "../Login";
 
 const routes = [
   {
-    path: "/uci-cs203",
+    path: "/",
     exact: true,
     main: () => <h1>This is the dashboard</h1>,
     show: false,

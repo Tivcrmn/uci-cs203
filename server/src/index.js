@@ -6,7 +6,6 @@ import errorHandle from "@/middlewares/errorHandle";
 import routers from "@/routers";
 import session from "express-session";
 import RedisStore from "connect-redis";
-import cors from "cors";
 import passport from "passport";
 import socketio from "socket.io";
 import "@/middlewares/passport-setup";
@@ -33,20 +32,14 @@ app.use(session({
 
 app.use(passport.initialize());
 
-app.use(
-  cors({
-    credentials: true,
-    origin: "http://localhost:3000",
-  })
-);
-
 app.enable("trust proxy");
 
 app.disable("x-powered-by");
 
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.setHeader("Access-Control-Allow-Origin", req.headers.origin);
   res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
   res.setHeader("Access-Control-Expose-Headers", "JWT, Token");
   next();
