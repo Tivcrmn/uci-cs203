@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import history from "plugins/history";
 import API from "plugins/axios";
+import { withRouter } from "react-router-dom";
 import "./index.css";
 
 class Login extends Component{
@@ -30,7 +30,7 @@ class Login extends Component{
           if (type !== "cs") {
             localStorage.setItem(type, res.headers[type]);
           }
-          history.push(`/${type}`);
+          this.props.history.push(`/${type}`);
         } else {
           alert(res.data.error);
         }
@@ -49,4 +49,4 @@ class Login extends Component{
   }
 }
 
-export default Login;
+export default withRouter(Login);

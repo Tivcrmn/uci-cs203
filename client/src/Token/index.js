@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import API from "plugins/axios";
-import history from "plugins/history";
+import { withRouter } from "react-router-dom";
 
 class Token extends Component{
   constructor(props) {
@@ -22,11 +22,11 @@ class Token extends Component{
             alert("token invalid");
             localStorage.removeItem("token");
             this.setState({ loading: false });
-            history.push("/login", {authType: "Token"});
+            this.props.history.push("/login", {authType: "Token"});
           }
         });
     } else {
-      history.push("/login", {authType: "Token"});
+      this.props.history.push("/login", {authType: "Token"});
       this.setState({ loading: false });
     }
   }
@@ -39,4 +39,4 @@ class Token extends Component{
   }
 }
 
-export default Token;
+export default withRouter(Token);

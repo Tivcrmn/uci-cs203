@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import API from "plugins/axios";
-import history from "plugins/history";
+import { withRouter } from "react-router-dom";
 
 class JWT extends Component{
   constructor(props) {
@@ -22,11 +22,11 @@ class JWT extends Component{
             alert("jwtToken invalid");
             localStorage.removeItem("jwt");
             this.setState({ loading: false });
-            history.push("/login", {authType: "JWT"});
+            this.props.history.push("/login", {authType: "JWT"});
           }
         });
     } else {
-      history.push({
+      this.props.history.push({
         pathname: "/login",
         state: {authType: "JWT"},
       });
@@ -42,4 +42,4 @@ class JWT extends Component{
   }
 }
 
-export default JWT;
+export default withRouter(JWT);

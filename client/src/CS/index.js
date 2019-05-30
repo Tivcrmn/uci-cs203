@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import API from "plugins/axios";
-import history from "plugins/history";
+import { withRouter } from "react-router-dom";
 
 class CS extends Component{
   constructor(props) {
@@ -18,7 +18,7 @@ class CS extends Component{
           this.setState({ loading: false });
         } else {
           this.setState({ loading: false });
-          history.push("/login", {authType: "CS"});
+          this.props.history.push("/login", {authType: "CS"});
         }
       });
   }
@@ -31,4 +31,4 @@ class CS extends Component{
   }
 }
 
-export default CS;
+export default withRouter(CS);

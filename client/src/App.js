@@ -1,13 +1,12 @@
 import React from "react";
-import { Router, Switch, Route, NavLink } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, NavLink } from "react-router-dom";
 import "./App.css";
-import history from "plugins/history";
 import routes from "plugins/routes";
 import logo from "./assets/logo.svg";
 
 const App = () => (
   <div className="Main">
-    <Router history={history}>
+    <Router basename="/uci-cs203/">
       <div id="navigation">
         <img src={logo} className="Main-logo" alt="logo"/>
         <ul>

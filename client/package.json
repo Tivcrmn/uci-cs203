@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "gh-pages": "^2.0.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.0",
@@ -12,17 +13,21 @@
     "socket.io-client": "^2.2.0"
   },
   "scripts": {
-    "start": "npm run lint && npm run kp && react-scripts start",
+    "start": "npm run lint && npm run kp && MY_APP_ENV=development && react-scripts start",
+    "remote": "npm run lint && npm run kp && MY_APP_ENV=production && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint:fix": "eslint --ext .js src --fix",
     "lint": "eslint --ext .js src",
-    "kp": "lsof -n -iTCP:3000 -sTCP:LISTEN -n -l -P | grep 'LISTEN' | awk '{print $2}' | xargs kill -9"
+    "kp": "lsof -n -iTCP:3000 -sTCP:LISTEN -n -l -P | grep 'LISTEN' | awk '{print $2}' | xargs kill -9",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
   },
+  "homepage": "http://tivcrmn.github.io/uci-cs203",
   "browserslist": [
     ">0.2%",
     "not dead",
