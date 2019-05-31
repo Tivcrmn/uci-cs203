@@ -17,7 +17,7 @@ passport.use(
   new Strategy({
     clientID: config.google.clientID,
     clientSecret: config.google.clientSecret,
-    callbackURL: "http://localhost:5000/api-self/v1/auth_google/redirect",
+    callbackURL: "http://35.236.62.175.xip.io:5000/api-self/v1/auth_google/redirect",
   }, (accessToken, refreshToken, profile, done) => {
     User.findOne({ googleId: profile.id }).then((currentUser) => {
       if (currentUser) {
