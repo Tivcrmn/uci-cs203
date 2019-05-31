@@ -31,11 +31,20 @@ class Token extends Component{
     }
   }
 
+  goToRandomAccess() {
+    this.props.history.push(`/token/${Math.random().toString(36).replace(/[^a-z]+/g, "").substr(0, 5)}`);
+  }
+
   render() {
     if (this.state.loading) {
       return <h1>Token loading....</h1>;
     }
-    return <h1>{`${window.location.pathname}`} success....</h1>;
+    return (
+      <div>
+        <h1>{`${window.location.pathname}`} success....</h1>
+        <button className="access" onClick={() => this.goToRandomAccess()}>Access a random resource</button>
+      </div>
+    );
   }
 }
 
